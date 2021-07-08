@@ -13,7 +13,13 @@ async function searchNewscatcher(query) {
   if (!query) throw error(400, "You must provide a query string 'q' to search.");
 
   const options = getNewscatcherRequestOptions(query);
-  const response = await axios.request(options);
+  let response; 
+  try {
+    response = await axios.request(options);
+  } catch (e) {
+    throw error(500, e.message, e.name);
+  }
+
   if (response.status !== 200) throw error(500, "An error occurred during the search.");
   return processNewscatcherResponse(response.data);
 }
@@ -22,7 +28,13 @@ async function searchNewsApi(query) {
   if (!query) throw error(400, "You must provide a query string 'q' to search.");
 
   const options = getNewsApiRequestOptions(query);
-  const response = await axios.request(options);
+  let response; 
+  try {
+    response = await axios.request(options);
+  } catch (e) {
+    throw error(500, e.message, e.name);
+  }
+  
   if (response.status !== 200) throw error(500, "An error occurred during the search.");
   return processNewsApiResponse(response.data);
 }
@@ -32,7 +44,13 @@ async function searchGoogle(query, page = 1) {
   if (page > 10) throw error(400, "Due to Google restrictions we can't get more than 100 results.");
 
   const options = getGoogleRequestOptions(query, page);
-  const response = await axios.request(options);
+  let response; 
+  try {
+    response = await axios.request(options);
+  } catch (e) {
+    throw error(500, e.message, e.name);
+  }
+
   if (response.status !== 200) throw error(500, "An error occurred during the search.");
   return processGoogleResponse(response.data);
 }
@@ -113,7 +131,8 @@ function getGoogleRequestOptions(query, page) {
       key: process.env.GOOGLE_API_KEY,
       cx: process.env.GOOGLE_API_CX,
       safe: "active",
-      start: 1 + (10 * page - 10) // 1, 11, 21, 31, etc.
+      start: 1 + (10 * page - 10), // 1, 11, 21, 31, etc.
+      dateRestrict: "m6"
     }
   }
 }
@@ -145,7 +164,8 @@ function getPubDateFromGoogle(article) {
   || null
 
   if (!date) {
-    const possibleDate = article.snippet.slice(0,12) // Long string that begins "Sep 17, 2020..."
+    // Snippet is a long string that usually begins with a date "Sep 17, 2020..."
+    const possibleDate = article.snippet.slice(0,12)
     re = /\w{3} \d{1,2}, \d{4}/;
     if (re.test(possibleDate)) {
       date = new Date(possibleDate);
