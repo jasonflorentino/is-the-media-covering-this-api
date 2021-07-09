@@ -42,6 +42,7 @@ async function searchNewsApi(query) {
 async function searchGoogle(query, page = 1) {
   if (!query) throw error(400, "You must provide a query string 'q' to search.");
   if (page > 10) throw error(400, "Due to Google restrictions we can't get more than 100 results.");
+  console.log("--QUERY--\n", query);
 
   const options = getGoogleRequestOptions(query, page);
   let response; 
@@ -52,7 +53,8 @@ async function searchGoogle(query, page = 1) {
   }
 
   if (response.status !== 200) throw error(500, "An error occurred during the search.");
-  return processGoogleResponse(response.data);
+  if (!response.data.items) throw error(500, "Couldn't find any results.");
+  return  processGoogleResponse(response.data);
 }
 
 // Helpers - Newscatcher
@@ -139,7 +141,7 @@ function getGoogleRequestOptions(query, page) {
 
 function processGoogleResponse(res) {
   return {
-    total_articles: res.searchInformation.totalResults,
+    total_articles: res.searchInformation.totalResults || 0,
     articles: res.items.map(makeArticleFromGoogle)
   }
 }

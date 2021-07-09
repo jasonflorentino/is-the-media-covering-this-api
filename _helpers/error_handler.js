@@ -6,10 +6,12 @@ module.exports = {
 function errorHandler(err, _req, res, _next) {
     // Handle 'throw <string>'
     if (typeof (err) === 'string') {
-        return res.status(400).json({ message: err });
+      console.error("--RUNTIME ERROR--\n", err)
+      return res.status(400).json({ message: err });
     }
-    
+      
     const status = err.status || 500;
+    console.error("--RUNTIME ERROR--\n", err)
     return res.status(status).json({ message: err.message });
 }
 
