@@ -42,7 +42,7 @@ async function searchNewsApi(query) {
 async function searchGoogle(query, page = 1) {
   if (!query) throw error(400, "You must provide a query string 'q' to search.");
   if (page > 10) throw error(400, "Due to Google restrictions we can't get more than 100 results.");
-  console.log("--QUERY--\n", query);
+  console.log("--QUERY--", query);
 
   const options = getGoogleRequestOptions(query, page);
   let response; 

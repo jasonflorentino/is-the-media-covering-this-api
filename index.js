@@ -19,6 +19,7 @@ app.use(express.json());
 
 // Routes
 app.use(authenticate);
+app.use('/v1/wakeup', (_req, res) => res.send("Awake"));
 app.use('/v1/news', require('./routes/news/news.controller'));
 
 // Errors
