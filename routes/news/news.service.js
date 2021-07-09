@@ -131,8 +131,8 @@ function getGoogleRequestOptions(query, page) {
       key: process.env.GOOGLE_API_KEY,
       cx: process.env.GOOGLE_API_CX,
       safe: "active",
-      start: 1 + (10 * page - 10), // 1, 11, 21, 31, etc.
-      dateRestrict: "m6"
+      start: 1 + (10 * page - 10), // Start index for pagination: 1, 11, 21, etc.
+      dateRestrict: "m6" // Limit to previous 6 months
     }
   }
 }
