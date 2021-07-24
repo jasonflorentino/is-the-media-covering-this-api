@@ -23,7 +23,7 @@ function searchNewsapi(req, res, next) {
 }
 
 function searchGoogle(req, res, next) {
-  newsService.searchGoogle(req.query.q, req.query.page)
+  newsService.searchGoogle(req.query.q, req.query.p)
     .then(news => res.status(200).json(news))
     .catch(err => next(err));
 }
