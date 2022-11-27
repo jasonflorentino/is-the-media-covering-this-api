@@ -1,5 +1,5 @@
 # 🗞 Is The Media Covering This?
-**The backend api for [this web app](https://github.com/jasonflorentino/is-the-media-covering-this-webapp) and [this Twitter bot](https://github.com/jasonflorentino/is-the-media-covering-this-bot)**
+**The backend api for a [web app](https://github.com/jasonflorentino/is-the-media-covering-this-webapp) and [Twitter bot](https://github.com/jasonflorentino/is-the-media-covering-this-bot)**
 
 #### 💀 Deprecation Notice
 As of 2022-11-26, those apps won't work. That's because this app is no longer running on its free Heroku dyno because those no longer exist. Currently I'm not planning on spinnit it up elsewhere. So here we are.
